@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noor App - مشغل الوسائط الروحي</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#0f172a',
+                        teal: '#14b8a6',
+                        gold: '#fbbf24',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');
+        body { font-family: 'Cairo', sans-serif; }
+        
+        .gold-gradient {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #fbbf24 100%);
+        }
+        
+        .gold-text-gradient {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .gold-glow {
+            box-shadow: 0 0 30px rgba(251, 191, 36, 0.5);
+        }
+        
+        .teal-glow {
+            box-shadow: 0 0 30px rgba(20, 184, 166, 0.4);
+        }
+        
+        .card-glow {
+            box-shadow: 0 0 40px rgba(20, 184, 166, 0.15);
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .spinner {
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes pulse-badge {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .badge-pulse {
+            animation: pulse-badge 2s ease-in-out infinite;
+        }
+        
+        input.error-border {
+            border-color: #ef4444 !important;
+        }
+        
+        .btn-transition {
+            transition: all 0.3s ease;
+        }
+        
+        .btn-transition:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="bg-dark min-h-screen text-white">
+    
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-dark/80 backdrop-blur-lg border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-gold to-amber-500 flex items-center justify-center">
+                    <svg class="w-6 h-6 text-dark" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    </svg>
+                </div>
+                <span class="text-2xl font-bold gold-text-gradient">نور</span>
+            </div>
+            <a href="#" id="header-download-btn" class="teal-glow bg-teal text-dark px-6 py-2.5 rounded-full font-semibold btn-transition border border-teal/30">
+                تحميل التطبيق
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center justify-center pt-20 px-6">
+        <div class="text-center max-w-4xl mx-auto">
+            <div class="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-2 mb-8">
+                <span class="w-2 h-2 bg-teal rounded-full animate-pulse"></span>
+                <span class="text-sm text-white/70">الإصدار 2.0 متاح الآن</span>
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl font-extrabold mb-6 leading-tight">
+                <span class="gold-text-gradient">نور</span>
+                <span class="text-white block text-3xl md:text-5xl mt-2">مشغل الوسائط الروحي</span>
+            </h1>
+            
+            <p class="text-xl text-white/60 mb-12 max-w-2xl mx-auto leading-relaxed">
+                استمتع بتجربة استماع فريدة مع نور - مشغل وسائط مصمم ليمنحك الهدوء والسكينة
+            </p>
+            
+            <a href="#" id="hero-download-btn" class="gold-gradient text-dark font-bold px-10 py-4 rounded-full text-lg inline-flex items-center gap-3 shadow-lg shadow-gold/20 btn-transition">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                </svg>
+                ابدأ التحميل الآن
+            </a>
+            <p class="mt-4 text-sm text-white/40" id="detected-arch-text">جاري تحديد البنية...</p>
+        </div>
+    </section>
+
+    <!-- In-App Downloader Section -->
+    <section id="download" class="py-20 px-6">
+        <div class="max-w-4xl mx-auto">
+            <div class="bg-dark/50 border border-white/10 rounded-3xl p-8 md:p-12 card-glow">
+                <div class="text-center mb-8">
+                    <div class="inline-flex items-center gap-3 mb-4">
+                        <h2 class="text-3xl font-bold">محمل نور</h2>
+                        <span class="gold-gradient text-dark text-xs font-bold px-3 py-1.5 rounded-full badge-pulse">
+                            جديد
+                        </span>
+                    </div>
+                    <p class="text-white/50">انسخ رابط الفيديو لفتحه في تطبيق نور</p>
+                </div>
+                
+                <div class="flex flex-col gap-4">
+                    <div class="flex flex-col md:flex-row gap-4">
+                        <div class="flex-1 relative">
+                            <div class="absolute right-4 top-1/2 -translate-y-1/2 text-white/30">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/>
+                                </svg>
+                            </div>
+                            <input type="url" id="video-url" placeholder="https://www.youtube.com/watch?v=..." 
+                                   class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pr-14 pl-6 text-white placeholder-white/30 focus:outline-none focus:border-teal/50 focus:bg-white/10 transition-all">
+                        </div>
+                        <button id="copy-url-btn" class="gold-glow gold-gradient text-dark font-bold px-8 py-4 rounded-2xl btn-transition flex items-center justify-center gap-3 min-w-[200px]">
+                            <svg id="copy-url-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            <span id="copy-url-text">نسخ الرابط</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Call to Action -->
+                    <div class="bg-gradient-to-r from-teal/10 to-gold/10 border border-white/10 rounded-2xl p-5 text-center">
+                        <div class="flex items-center justify-center gap-3 mb-2">
+                            <svg class="w-6 h-6 text-gold" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                            </svg>
+                            <p class="text-white/80 font-semibold">ميزة التحميل متاحة الآن داخل التطبيق!</p>
+                        </div>
+                        <p class="text-white/50 text-sm">اذهب إلى <span class="text-teal font-semibold">الإعدادات</span> ← <span class="text-gold font-semibold">محمل نور</span></p>
+                    </div>
+                    
+                    <!-- Error Message -->
+                    <div id="error-message" class="hidden text-red-400 text-sm text-right pr-2">
+                        <span class="inline-flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                            </svg>
+                            <span id="error-text"></span>
+                        </span>
+                    </div>
+                    
+                    <!-- Success Message -->
+                    <div id="success-message" class="hidden text-teal text-sm text-right pr-2">
+                        <span class="inline-flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                            <span id="success-text"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Architecture Detection Card -->
+    <section class="py-20 px-6">
+        <div class="max-w-2xl mx-auto">
+            <div class="bg-white/5 border border-white/10 rounded-3xl p-8 text-center">
+                <div class="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-teal/20 to-gold/20 flex items-center justify-center border border-white/10">
+                    <svg id="arch-spinner" class="w-10 h-10 text-teal" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                </div>
+                
+                <h3 class="text-2xl font-bold mb-3" id="arch-title">جاري الكشف عن الجهاز...</h3>
+                <p class="text-white/50 mb-6" id="arch-subtitle">يتم تحديد البنية التقنية لجهازك تلقائياً</p>
+                
+                <div class="bg-dark/50 rounded-2xl p-6 border border-white/10">
+                    <div class="grid grid-cols-2 gap-4 text-right">
+                        <div class="bg-white/5 rounded-xl p-4">
+                            <p class="text-white/40 text-sm mb-1">نظام التشغيل</p>
+                            <p class="font-semibold" id="os-detect">جاري الكشف...</p>
+                        </div>
+                        <div class="bg-white/5 rounded-xl p-4">
+                            <p class="text-white/40 text-sm mb-1">المعمارية</p>
+                            <p class="font-semibold" id="arch-detect">جاري الكشف...</p>
+                        </div>
+                        <div class="bg-white/5 rounded-xl p-4">
+                            <p class="text-white/40 text-sm mb-1">المتصفح</p>
+                            <p class="font-semibold" id="browser-detect">جاري الكشف...</p>
+                        </div>
+                        <div class="bg-white/5 rounded-xl p-4">
+                            <p class="text-white/40 text-sm mb-1">نوع الجهاز</p>
+                            <p class="font-semibold" id="device-detect">جاري الكشف...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 px-6 border-t border-white/5">
+        <div class="max-w-7xl mx-auto text-center">
+            <p class="text-white/30 text-sm">© 2025 Noor App. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+
+    <!-- Main Script -->
+    <script>
+        const APK_URLS = {
+            v8a: 'https://github.com/toyotapois/noor_app/releases/download/version_v1.0.0/app-arm64-v8a-release.apk',
+            v7a: 'https://github.com/toyotapois/noor_app/releases/download/version_v1.0.0/app-armeabi-v7a-release.apk'
+        };
+
+        let detectedArch = null;
+
+        function detectArchitecture() {
+            const ua = navigator.userAgent;
+
+            let arch = 'v7a';
+            let osName = 'غير معروف';
+            let device = 'كمبيوتر';
+
+            if (/Android/i.test(ua)) {
+                osName = 'Android';
+                device = 'هاتف ذكي/جهاز لوحي';
+                
+                if (/aarch64|arm64|armv8|Android.*;.*Build/i.test(ua)) {
+                    arch = 'v8a';
+                } else if (/armeabi|armv7/i.test(ua)) {
+                    arch = 'v7a';
+                } else {
+                    arch = 'v7a';
+                }
+            } else if (/iPhone|iPad|iPod/i.test(ua)) {
+                osName = 'iOS';
+                device = 'أجهزة Apple';
+                arch = 'v8a';
+            } else if (/Windows/i.test(ua)) {
+                osName = 'Windows';
+            } else if (/Mac/i.test(ua)) {
+                osName = 'macOS';
+            } else if (/Linux/i.test(ua)) {
+                osName = 'Linux';
+            }
+
+            detectedArch = arch;
+
+            let browser = 'غير معروف';
+            if (/Chrome/i.test(ua)) browser = 'Chrome';
+            else if (/Firefox/i.test(ua)) browser = 'Firefox';
+            else if (/Safari/i.test(ua) && !/Chrome/i.test(ua)) browser = 'Safari';
+            else if (/Edge/i.test(ua)) browser = 'Edge';
+
+            const archName = arch === 'v8a' ? '64-bit (v8a)' : '32-bit (v7a)';
+
+            setTimeout(() => {
+                document.getElementById('os-detect').textContent = osName;
+                document.getElementById('arch-detect').textContent = archName;
+                document.getElementById('browser-detect').textContent = browser;
+                document.getElementById('device-detect').textContent = device;
+                
+                document.getElementById('arch-title').textContent = 'تم تحديد المعمارية بنجاح!';
+                document.getElementById('arch-subtitle').textContent = 'حمل النسخة الأمثل لجهازك الآن.';
+                
+                document.getElementById('arch-spinner').classList.remove('spinner');
+                document.getElementById('arch-spinner').innerHTML = `
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                `;
+                document.getElementById('arch-spinner').classList.add('text-teal');
+                document.getElementById('arch-spinner').style.animation = 'none';
+
+                const downloadUrl = APK_URLS[arch];
+                document.getElementById('hero-download-btn').href = downloadUrl;
+                document.getElementById('header-download-btn').href = downloadUrl;
+                document.getElementById('detected-arch-text').textContent = `المعمارية: ${archName} • جاهز للتحميل`;
+            }, 1500);
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('error-message');
+            const errorText = document.getElementById('error-text');
+            const successDiv = document.getElementById('success-message');
+            const input = document.getElementById('video-url');
+            
+            successDiv.classList.add('hidden');
+            errorText.textContent = message;
+            errorDiv.classList.remove('hidden');
+            input.classList.add('error-border');
+            
+            setTimeout(() => {
+                errorDiv.classList.add('hidden');
+                input.classList.remove('error-border');
+            }, 5000);
+        }
+
+        function showSuccess(message) {
+            const successDiv = document.getElementById('success-message');
+            const successText = document.getElementById('success-text');
+            const errorDiv = document.getElementById('error-message');
+            
+            errorDiv.classList.add('hidden');
+            successText.textContent = message;
+            successDiv.classList.remove('hidden');
+            
+            setTimeout(() => {
+                successDiv.classList.add('hidden');
+            }, 3000);
+        }
+
+        function hideError() {
+            document.getElementById('error-message').classList.add('hidden');
+            document.getElementById('video-url').classList.remove('error-border');
+        }
+
+        function isValidUrl(string) {
+            try {
+                new URL(string);
+                return true;
+            } catch (_) {
+                return false;
+            }
+        }
+
+        document.getElementById('copy-url-btn').addEventListener('click', async () => {
+            const urlInput = document.getElementById('video-url');
+            const url = urlInput.value.trim();
+
+            if (!url) {
+                showError('يرجى لصق رابط الفيديو أولاً');
+                return;
+            }
+
+            if (!isValidUrl(url)) {
+                showError('الرابط غير صالح. يرجى إدخال رابط صحيح.');
+                return;
+            }
+
+            const copyBtn = document.getElementById('copy-url-btn');
+            const copyIcon = document.getElementById('copy-url-icon');
+            const copyText = document.getElementById('copy-url-text');
+            
+            hideError();
+
+            try {
+                await navigator.clipboard.writeText(url);
+                
+                copyIcon.innerHTML = `
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                `;
+                copyText.textContent = 'تم النسخ!';
+                copyBtn.classList.add('opacity-90');
+                
+                showSuccess('تم نسخ الرابط! افتحه في تطبيق نور للتحميل.');
+                
+                setTimeout(() => {
+                    copyIcon.innerHTML = `
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                    `;
+                    copyText.textContent = 'نسخ الرابط';
+                    copyBtn.classList.remove('opacity-90');
+                }, 2500);
+
+            } catch (err) {
+                showError('فشل في نسخ الرابط. يرجى النسخ يدوياً.');
+            }
+        });
+
+        document.getElementById('video-url').addEventListener('input', hideError);
+        document.getElementById('video-url').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                document.getElementById('copy-url-btn').click();
+            }
+        });
+
+        detectArchitecture();
+    </script>
+
+</body>
+</html>
